@@ -3,7 +3,7 @@
         "host": "localhost",
         "user": "username",
         "password": "password",
-        "database": "mydb2",
+        "database": "mydb",
         "port": 3306
     },
     "mongo": {
