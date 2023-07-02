@@ -3,43 +3,47 @@ const config = require('config');
 const util = require('util');
 
 (async () => {
-  console.log(__dirname)
+  console.log(__dirname);
 
-    const connection = mysql.createConnection({
-        host: config.get('mysql.host'),
-        user: config.get('mysql.user'),
-        port: config.get('mysql.port'),
-        password: config.get('mysql.password'),
-        database: config.get('mysql.database'),
-    })
+  // Create a connection to the MySQL database
+  const connection = mysql.createConnection({
+    host: config.get('mysql.host'),
+    user: config.get('mysql.user'),
+    port: config.get('mysql.port'),
+    password: config.get('mysql.password'),
+    database: config.get('mysql.database'),
+  });
 
-    connection.connect = util.promisify(connection.connect);
-    connection.query = util.promisify(connection.query);
+  // Promisify the connection methods for easier use with async/await
+  connection.connect = util.promisify(connection.connect);
+  connection.query = util.promisify(connection.query);
 
-    await connection.connect();
+  // Connect to the MySQL database
+  await connection.connect();
+  console.log('Connected to the database');
 
-    console.log('connected');
-
-    await connection.query(`
+  // Create the "users" table if it doesn't exist
+  await connection.query(`
     CREATE TABLE IF NOT EXISTS users (
-        id int auto_increment,
-        github_id varchar(255) not null,
-        primary key (id)
-      )  
- 
-    `);
+      id int auto_increment,
+      github_id varchar(255) not null,
+      primary key (id)
+    )
+  `);
+  console.log('Created "users" table');
 
-    console.log('created usres table')
-
-    await connection.query(`
+  // Create the "users_symbols" table if it doesn't exist
+  await connection.query(`
     CREATE TABLE IF NOT EXISTS users_symbols (
-        id int auto_increment,
-        user_id int not null,
-        symbol varchar(3) not null,
-        primary key (id)
-      )  
-     `);
+      id int auto_increment,
+      user_id int not null,
+      symbol varchar(3) not null,
+      primary key (id)
+    )
+  `);
+  console.log('Created "users_symbols" table');
 
-    console.log('created users_symbols'); 
-    process.exit()
+  // Close the connection
+  connection.end();
+  console.log('Connection closed');
 })();
