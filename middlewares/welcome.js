@@ -1,5 +1,5 @@
 const welcome = async (req, res) => {
-    res.send("Welcome to cd");
+    res.render('welcome');
 }
 
 module.exports = welcome;

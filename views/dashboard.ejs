@@ -1,0 +1,33 @@
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+    var socket = io();
+    socket.on('update from express', (message) => {
+        updateSymbolValue(message.symbol, message.value);
+    })
+</script>
+
+<form method="POST" action="/users/symbol">
+    <input name="symbol" placeholder="new symbol?">
+    <input type="submit" value="add">
+</form>
+
+<table>
+    <tr>
+        <td>Symbol</td>
+        <td>Value</td>
+    </tr>
+    <% userSymbols.forEach((userSymbol) => { %>
+        <tr>
+            <td><%=userSymbol.symbol%></td>
+            <td id="<%= userSymbol.symbol %>-value"><%=symbolValues.find((symbolValue) => symbolValue.symbol === userSymbol.symbol).value%></td>
+        </tr>
+
+    <% }) %>
+</table>
+
+<script>
+    const updateSymbolValue = (symbol, value) => {
+        document.getElementById(`${symbol}-value`).innerHTML = value; 
+    } 
+</script>
+<a href="/users/logout">logout</a>
