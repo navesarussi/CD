@@ -3,14 +3,23 @@ const app = express();
 const http = require('http');
 const PORT = '3000';
 
-const routeusers = require('./routes/routeusers');
-const routeguests = require('./routes/routeguests');
+const users = require('./routes/users');
+const guests = require('./routes/guests');
+const github = require('./routes/github');
+
+
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+// Specify the views directory
+app.set('views', __dirname + '/views');
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/',routeusers);
-app.use('/',routeguests);
+app.use('/auth/github',github)
+app.use('/',users);
+app.use('/',guests);
 
 
 app.listen(PORT, () => {
