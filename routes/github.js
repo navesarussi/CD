@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 
 
 router.get('/', auth.authenticate('github', { scope: [ 'user:email' ] })); 
-router.get('/callback', auth.authenticate('github', { failureRedirect: '/users/welcome', successRedirect: '/users/dashboard' }))
+router.get('/callback', auth.authenticate('github', { failureRedirect: '/welcome', successRedirect: '/dashboard' }))
 
 
 module.exports = router;
