@@ -9,8 +9,9 @@ const config = require('config');
 const users = require('./routes/users');
 const guests = require('./routes/guests');
 const github = require('./routes/github');
-
-
+const auth = require('./middlewares/auth');
+const { middleware: db } = require('./middlewares/connectMysql');
+const mongo = require('./middlewares/connectMongo');
 const MySQLStore = require('express-mysql-session')(session);
 const mysqlOptions = {
     host: config.get('mysql.host'),
@@ -42,8 +43,13 @@ app.use(session({
     },
   }));
 
+app.use(auth.initialize());
+app.use(auth.session());
 
-app.use('/auth/github',github)
+
+app.use(db);
+app.use(mongo);
+app.use('/auth/github',github);
 app.use('/',users);
 app.use('/',guests);
 

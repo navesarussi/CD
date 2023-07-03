@@ -3,8 +3,10 @@ const route = express.Router();
 
 const dashboard = require('../middlewares/dashboard');
 const logout = require('../controllers/logout');
+const enforceAuth = require('../middlewares/enforce-auth');
 
-route.get('/dashboard',dashboard);
+
+route.get('/dashboard',enforceAuth,dashboard);
 //route.get('/logout',logout);
 
 module.exports = route;
