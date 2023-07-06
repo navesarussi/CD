@@ -1,0 +1,16 @@
+FROM node:14
+
+WORKDIR ./
+COPY package.json .
+RUN npm install
+COPY . .
+# Add a Version label
+LABEL Version="1.0"
+
+
+# Expose a port (optional, if your application needs to listen on a specific port)
+# EXPOSE 3000
+
+# Add a Name label
+LABEL Name="My Node.js worker"
+CMD node worker.js

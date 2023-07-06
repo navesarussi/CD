@@ -10,6 +10,7 @@ const { io } = require('socket.io-client');
 const socket = io(`http://${config.get('worker.app.host')}:${config.get('worker.app.port')}`);
 
 const SymbolValue = require('./models/mongo/symbols_values');
+const { workerData } = require('worker_threads');
 const scrape = async (symbol) => {
     try{
         const html = await axios(`https://www.google.com/finance/quote/${symbol.symbol}-USD`)
@@ -71,3 +72,4 @@ const loop = async (connection) => {
     loop(connection);
     
 })();
+
