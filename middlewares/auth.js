@@ -89,7 +89,7 @@ passport.use(new GitHubStrategy({
                     id: insert.insertId,
                 })
             }
-            console.log(util.inspect(authenticatedUser[0], false, null));
+            //console.log(util.inspect(authenticatedUser[0], false, null));
             return done(null, authenticatedUser[0]);
         } catch (err) {
             return done(err);

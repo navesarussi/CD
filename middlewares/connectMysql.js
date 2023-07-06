@@ -33,11 +33,11 @@ const middleware = (req, res, next) => {
 };
 
 // Log the MySQL connection details
-console.log('MySQL connection pool created');
-console.log('Host:', config.get('mysql.host'));
-console.log('User:', config.get('mysql.user'));
-console.log('Database:', config.get('mysql.database'));
-console.log('Port:', config.get('mysql.port'));
+// console.log('MySQL connection pool created');
+// console.log('Host:', config.get('mysql.host'));
+// console.log('User:', config.get('mysql.user'));
+// console.log('Database:', config.get('mysql.database'));
+// console.log('Port:', config.get('mysql.port'));
 
 // Log a success message indicating a successful connection
 pool.getConnection((err, connection) => {
