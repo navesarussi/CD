@@ -61,19 +61,17 @@ app.use("/", users);
 app.use("/", guests);
 
 // Socket.IO connection handling
-io.on("connection", (socket) => {
-  console.log("A user connected");
-
-  // Handle chat messages
-  socket.on("chat message", (message) => {
-    console.log(`Received message: ${message}`);
-    io.emit("chat message", message);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
   });
 
-  // Handle user disconnection
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
+  socket.on('message from worker', (message) => {
+      console.log('io: message from worker', message);
+      io.emit('update from express', message);
+  })
 });
 
 // Start the server

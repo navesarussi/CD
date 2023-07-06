@@ -37,7 +37,7 @@ const util = require('util');
     CREATE TABLE IF NOT EXISTS users_symbols (
       id int auto_increment,
       user_id int not null,
-      symbol varchar(3) not null,
+      symbol varchar(5) not null,
       primary key (id)
     )
   `);

@@ -4,9 +4,20 @@ class UserSymbol {
     };
 
     async add ({userId, symbol}) {
+        console.log('add', userId, symbol);
         return this.db.execute(`
             insert into users_symbols (user_id, symbol)
             values (?, ?)
+        `,[
+            userId,
+            symbol,
+        ]);
+    };
+
+    async remove ({userId, symbol}) {
+        console.log('remove', userId, symbol);
+        return this.db.execute(`
+            delete from users_symbols where user_id =? and symbol =?
         `,[
             userId,
             symbol,
