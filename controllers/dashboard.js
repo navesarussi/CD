@@ -1,6 +1,46 @@
+const SymbolValue = require('../models/mongo/symbols_values');
 const UserSymbol = require('../models/mysql/user_symbol');
 const SymbolValues = require('../models/mongo/symbols_values');
 const mongoose = require('mongoose');
+
+const addSymbol = async (req, res,next) => {
+    try {  
+        const userSymbol = new UserSymbol(req.db);
+        const userSymbols = await userSymbol.findByUserId({userId:  req.user.id});
+        if(req.user.id){
+            userSymbol.add({userId: req.user.id,symbol: req.body.symbol});
+        }
+         res.redirect('/dashboard');
+    } catch (error) {
+        next(error);
+    }
+}
+const removeSymbol = async (req, res,next) => {
+    try {  
+        const userSymbol = new UserSymbol(req.db);
+        const userSymbols = await userSymbol.findByUserId({userId:  req.user.id});
+        if(req.user.id){
+            userSymbol.remove({userId: req.user.id,symbol: req.body.symbol});
+        }
+         res.redirect('/dashboard');
+    } catch (error) {
+        next(error);
+    }
+}
+const welcome = async (req, res) => {
+    console.log("Welcome");
+    res.render('welcome');
+}
+
+const logout  = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/welcome');
+    });
+    
+}
 
 const dashboard = async (req, res,next) => {
     try {
@@ -33,4 +73,12 @@ const dashboard = async (req, res,next) => {
     }
 }
 
-module.exports = dashboard;
+module.exports = {
+    
+    addSymbol,
+    welcome,
+    dashboard,
+    logout,
+    removeSymbol,
+
+}

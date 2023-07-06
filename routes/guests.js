@@ -2,8 +2,9 @@ const express = require('express');
 const route = express.Router();
 
 
-const welcome = require('../middlewares/welcome');
+const { welcome } = require('../controllers/dashboard');
+const enforceGuests = require('../middlewares/enforce-guests');
 
-route.use('/welcome', welcome);
+route.use('/welcome',enforceGuests,welcome);
 
 module.exports = route;

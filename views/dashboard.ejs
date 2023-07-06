@@ -6,9 +6,13 @@
     })
 </script>
 
-<form method="POST" action="/users/symbol">
+<form method="POST" action="/addSymbol">
     <input name="symbol" placeholder="new symbol?">
     <input type="submit" value="add">
+</form>
+<form method="POST" action="/removeSymbol">
+    <input name="symbol" placeholder="remove symbol?">
+    <input type="submit" value="remove">
 </form>
 
 <table>
@@ -19,9 +23,11 @@
     <% userSymbols.forEach((userSymbol) => { %>
         <tr>
             <td><%=userSymbol.symbol%></td>
-            <td id="<%= userSymbol.symbol %>-value"><%=symbolValues.find((symbolValue) => symbolValue.symbol === userSymbol.symbol).value%></td>
+            <td id="<%= userSymbol.symbol %>-value">
+            <% const symbolValueObj = symbolValues.find((symbolValue) => symbolValue && symbolValue.symbol === userSymbol.symbol); %>
+            <%= symbolValueObj ? symbolValueObj.value : 'N/A' %>
+            </td>
         </tr>
-
     <% }) %>
 </table>
 
@@ -30,4 +36,4 @@
         document.getElementById(`${symbol}-value`).innerHTML = value; 
     } 
 </script>
-<a href="/users/logout">logout</a>
+<a href="/logout">logout</a>
